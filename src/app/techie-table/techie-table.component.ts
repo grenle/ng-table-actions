@@ -5,11 +5,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component'
 
-type Techie = {
-  id: string;
-  name: string;
-  email: string;
-}
+import {StoreService} from '../store.service'
+
+import {TechieArray} from '../types/techies'
 
 @Component({
   selector: 'app-techie-table',
@@ -25,17 +23,20 @@ export class TechieTableComponent implements OnInit {
 
   dialogRef!: MatDialogRef<ConfirmDialogComponent>;
 
-  techies: Techie[] = [
-    {id: 'id000', name: 'hiyam', email: 'hiyam@thedo.jo'},
-    {id: 'id001', name: 'Tetsuo', email: 'testuo@tropbeau.com'}
-  ]
+  techies: TechieArray = []
 
   displayedColumns: string[] = ['name', 'email', 'edit', 'delete']
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private storeService: StoreService) {}
 
-  onEditRequest(id: string){
-    console.log(`editing techie id: ${id}`)
+  ngOnInit(): void {
+    this.getTechies()
+  }
+
+  getTechies(): void {
+    this.storeService.getTechies().subscribe( techies => {
+      this.techies = techies
+    })
   }
 
   onDeleteRequest(id: string){
@@ -72,9 +73,6 @@ export class TechieTableComponent implements OnInit {
       this.techies.splice(techieIndex, 1)
       this.techietable.renderRows()
     }
-  }
-
-  ngOnInit(): void {
   }
 
 }

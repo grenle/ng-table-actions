@@ -1,4 +1,7 @@
 <h2>Techies</h2>
+  <button mat-fab color="primary" routerLink="addmodify">
+    <mat-icon>add</mat-icon>
+  </button>
   <mat-table #techietable [dataSource]="techies">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -11,7 +14,7 @@
     <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-button (click)="onEditRequest(element.id)">
+        <button mat-button routerLink="addmodify" fragment="{{element.id}}">
           <span class="material-icons">
             create
           </span>

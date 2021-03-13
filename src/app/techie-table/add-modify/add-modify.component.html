@@ -1,1 +1,23 @@
-<p>add-modify works!</p>
+<h2>
+  <span *ngIf="isTechieNew; then titleAdd else titleModify"></span>
+  <ng-template #titleAdd>Add a new Techie</ng-template>
+  <ng-template #titleModify>Modify Techie {{techieDetails.name}}</ng-template>
+</h2>
+
+<!--<form #heroForm="ngForm">-->
+<form #techieForm="ngForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Enter name</mat-label>
+    <input matInput type="text" class="form-control" id="name" required [(ngModel)]="techieDetails.name" name="name" #name="ngModel">
+    <mat-error *ngIf="name.invalid">Name is required</mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Enter email</mat-label>
+    <input matInput type="text" class="form-control" id="email" required [(ngModel)]="techieDetails.email" name="email" #email="ngModel">
+    <mat-error *ngIf="email.invalid">Email is required</mat-error>
+  </mat-form-field>
+  <br />
+  <button mat-raised-button color="primary" type="submit" [disabled]="!techieForm.form.valid">Submit</button>
+</form>
+
